@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.core.JsonParser;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -40,10 +41,12 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         try {
         	
         	contentType = req.getHeader("Accept");
-        	
-            UserLoginRequestModel creds = new ObjectMapper()
+        	ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true);
+
+            UserLoginRequestModel creds = objectMapper
                     .readValue(req.getInputStream(), UserLoginRequestModel.class);
-            
+
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             creds.getEmail(),

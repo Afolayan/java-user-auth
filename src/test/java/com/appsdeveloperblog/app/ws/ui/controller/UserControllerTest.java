@@ -16,7 +16,6 @@ import org.mockito.MockitoAnnotations;
 import com.appsdeveloperblog.app.ws.service.impl.UserServiceImpl;
 import com.appsdeveloperblog.app.ws.shared.dto.AddressDTO;
 import com.appsdeveloperblog.app.ws.shared.dto.UserDto;
-import com.appsdeveloperblog.app.ws.ui.contoller.UserController;
 import com.appsdeveloperblog.app.ws.ui.model.response.UserRest;
 
 class UserControllerTest {

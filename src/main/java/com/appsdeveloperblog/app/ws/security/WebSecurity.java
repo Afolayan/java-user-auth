@@ -48,6 +48,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
         .addFilter(getAuthenticationFilter())
         .addFilter(new AuthorizationFilter(authenticationManager()))
         .sessionManagement()
+                //make session stateless
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         
         http.headers().frameOptions().disable();

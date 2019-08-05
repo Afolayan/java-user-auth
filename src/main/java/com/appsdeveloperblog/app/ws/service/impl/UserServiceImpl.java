@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 	public UserDto createUser(UserDto user) {
 
 		if (userRepository.findByEmail(user.getEmail()) != null)
-			throw new UserServiceException("Record already exists");
+			throw new UserServiceException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
 
 		for(int i=0;i<user.getAddresses().size();i++)
 		{
@@ -60,22 +60,23 @@ public class UserServiceImpl implements UserService {
 			user.getAddresses().set(i, address);
 		}
 		  
-		//BeanUtils.copyProperties(user, userEntity);
 		ModelMapper modelMapper = new ModelMapper();
 		UserEntity userEntity = modelMapper.map(user, UserEntity.class);
 
 		String publicUserId = utils.generateUserId(30);
 		userEntity.setUserId(publicUserId);
 		userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		userEntity.setEmailVerificationToken(utils.generateEmailVerificationToken(publicUserId));
+		String emailVerificationToken = utils.generateEmailVerificationToken(publicUserId);
+		userEntity.setEmailVerificationToken(emailVerificationToken);
+		//userEntity.setEmailVerificationToken("emailVerificationToken");
 
 		UserEntity storedUserDetails = userRepository.save(userEntity);
  
-		//BeanUtils.copyProperties(storedUserDetails, returnValue);
 		UserDto returnValue  = modelMapper.map(storedUserDetails, UserDto.class);
 		
         // Send an email message to user to verify their email address
-		amazonSES.verifyEmail(returnValue);
+		// TODO: Make this guy available when ready or use another cool client
+		// amazonSES.verifyEmail(returnValue);
 
 		return returnValue;
 	}
@@ -101,11 +102,12 @@ public class UserServiceImpl implements UserService {
 			throw new UsernameNotFoundException(email);
 		
 		return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), 
-				userEntity.getEmailVerificationStatus(),
+				true,
+				//TODO: Change "true" above when we can get email verification status
+				//userEntity.getEmailVerificationStatus(),
 				true, true,
 				true, new ArrayList<>());
 
-		//return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), new ArrayList<>());
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package com.appsdeveloperblog.app.ws.ui.contoller;
+package com.appsdeveloperblog.app.ws.ui.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

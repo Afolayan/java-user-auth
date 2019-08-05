@@ -13,22 +13,20 @@ import com.appsdeveloperblog.app.ws.ui.model.response.ErrorMessage;
 
 @ControllerAdvice
 public class AppExceptionsHandler {
-	
-	@ExceptionHandler(value = {UserServiceException.class})
-	public ResponseEntity<Object> handleUserServiceException(UserServiceException ex, WebRequest request)
-	{
-		ErrorMessage errorMessage = new ErrorMessage(new Date(), ex.getMessage());
-		
-		return new ResponseEntity<>(errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	
-	
-	@ExceptionHandler(value = {Exception.class})
-	public ResponseEntity<Object> handleOtherExceptions(Exception ex, WebRequest request)
-	{
-		ErrorMessage errorMessage = new ErrorMessage(new Date(), ex.getMessage());
-		
-		return new ResponseEntity<>(errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
-	}
+
+    @ExceptionHandler(value = {UserServiceException.class})
+    public ResponseEntity<Object> handleUserServiceException(UserServiceException ex, WebRequest request) {
+        ErrorMessage errorMessage = new ErrorMessage(new Date(), ex.getMessage());
+
+        return new ResponseEntity<>(errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+    @ExceptionHandler(value = {Exception.class})
+    public ResponseEntity<Object> handleOtherExceptions(Exception ex, WebRequest request) {
+        ErrorMessage errorMessage = new ErrorMessage(new Date(), ex.getMessage());
+
+        return new ResponseEntity<>(errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
 }

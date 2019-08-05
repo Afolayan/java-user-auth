@@ -1,4 +1,4 @@
-package com.appsdeveloperblog.app.ws.ui.contoller;
+package com.appsdeveloperblog.app.ws.ui.controller;
 
 public enum RequestOperationName {
 	DELETE,
